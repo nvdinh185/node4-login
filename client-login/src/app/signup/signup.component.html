@@ -1,0 +1,20 @@
+<p>This is SignUp Form</p>
+<form (submit)="onSubmit()" [formGroup]="formSignUp">
+  <input placeholder="Email" formControlName="email" />
+  <br />
+  <p *ngIf="formSignUp.get('email').invalid && formSignUp.get('email').touched">
+    Email is required
+  </p>
+  <br />
+  <input type="password" placeholder="Password" formControlName="password" />
+  <br />
+  <div formGroupName="subject">
+    <label> NodeJS<input type="checkbox" formControlName="nodeJS" /></label>
+    <label> Angular<input type="checkbox" formControlName="angular" /></label>
+    <label> ReactJS<input type="checkbox" formControlName="react" /></label>
+  </div>
+  <br />
+  <button [disabled]="formSignUp.invalid">Submit</button>
+</form>
+<code>{{ formSignUp.controls.email.errors | json }}</code><br />
+<code>{{ formSignUp.controls.password.errors | json }}</code>
