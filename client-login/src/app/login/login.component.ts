@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  formSignIn: FormGroup;
+  constructor(
+    private fb: FormBuilder
+    , private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    this.formSignIn = this.fb.group({
+      email: [''],
+      password: ['']
+    })
+  }
+
+  async onSubmit() {
+    let user = this.formSignIn.value;
+    let urlServer = 'http://localhost:3000/auth/login-user';
+    try {
+      let res = await this.authService.postDynamicJson(urlServer, user, true);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
 }

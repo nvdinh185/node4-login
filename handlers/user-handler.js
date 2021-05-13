@@ -26,6 +26,55 @@ class UserHandler {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ status: 'OK', user: user, token: req.token }));
     }
+
+    /**
+     * Kiểm tra đăng nhập và trả về thành công hoặc thất bại
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    async loginUser(req, res, next) {
+        // console.log(req.user);
+        // console.log("json_data: ", req.json_data);
+        if (req.user) {
+            if (req.user.email === req.json_data.email //user của token và post là giống nhau
+                // && req.json_data.password === req.password //password post trùng với password trong csdl
+            ) {
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ status: 'OK', message: 'Đăng nhập thành công!' }));
+            } else {
+                res.writeHead(435, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ status: 'NOK', message: 'Đăng nhập thất bại!' }));
+            }
+        } else {
+            res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: 'NOK', message: 'Lỗi xác thực', error: req.error }));
+        }
+    }
+
+    /**
+     * Lấy bản ghi với username trả về cho client
+     * @param {*} req 
+     * @param {*} res 
+     * @param {*} next 
+     */
+    getUserInfo(req, res, next) {
+        if (req.user) {
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({
+                status: "OK",
+                token: req.token
+            }
+                , (key, value) => {
+                    if (value === null) { return undefined; }
+                    return value
+                }
+            ));
+        } else {
+            res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ status: 'NOK', message: 'Lỗi xác thực', error: req.error }));
+        }
+    }
 }
 
 module.exports = new UserHandler();

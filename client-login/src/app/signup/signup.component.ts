@@ -33,8 +33,8 @@ export class SignupComponent implements OnInit {
     let urlServer = 'http://localhost:3000/auth/create-user';
     let user = this.formSignUp.value;
     let res = await this.authService.postDynamicJson(urlServer, user);
-    // console.log(res);
     this.apiStorage.save("TOKEN", res.token);
+    console.log(res);
   }
 
 }

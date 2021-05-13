@@ -46,7 +46,7 @@ class TokenHandler {
     //- nếu đăng ký mới hoặc đăng nhập thì phải có otp
     //- nếu xác nhận lại thì không cần otp
 
-    jwt.verify(req.token, (req.otp ? req.otp : '') + pass_sign_token + timeSign,
+    jwt.verify(req.token, pass_sign_token + timeSign,
       (err, decoded) => {
         if (err) {
           console.log('Lỗi xác thực:', err.message);
@@ -91,24 +91,9 @@ class TokenHandler {
    * @param {*} next 
    */
   requestNewToken(req, res, next) {
+    // console.log(req.json_data);
     req.token = sign(req, '10h');
     next();
-  }
-
-  /**
-   * Reset lại token và otp
-   * @param {*} req 
-   * @param {*} res 
-   * @param {*} next 
-   */
-  createToken365(req, res, next) {
-
-    if (req.username) {
-      req.otp = undefined; //reset otp de khong ma hoa token
-      req.token = sign(req, '10h'); //reset lại token
-
-      next();
-    }
   }
 }
 

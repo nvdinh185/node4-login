@@ -1,3 +1,14 @@
-<p>
-  login works!
-</p>
+<p>This is Login Form</p>
+<form (submit)="onSubmit()" [formGroup]="formSignIn">
+  <input placeholder="Email" formControlName="email" />
+  <br />
+  <p *ngIf="formSignIn.get('email').invalid && formSignIn.get('email').touched">
+    Email is required
+  </p>
+  <br />
+  <input type="password" placeholder="Password" formControlName="password" />
+  <br />
+  <button [disabled]="formSignIn.invalid">Submit</button>
+</form>
+<code>{{ formSignIn.controls.email.errors | json }}</code><br />
+<code>{{ formSignIn.controls.password.errors | json }}</code>
