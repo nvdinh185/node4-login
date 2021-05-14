@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiStorageService } from './services/api-storage.service';
+import { ApiStorageService } from './services/storage.service';
 import { AuthService } from './services/auth.service';
 
 @Component({

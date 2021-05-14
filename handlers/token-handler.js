@@ -43,9 +43,6 @@ class TokenHandler {
     // console.log("userToken: ", userToken);
     let timeSign = userToken.time_sign;
     //xác thực token và otp truyền lên:
-    //- nếu đăng ký mới hoặc đăng nhập thì phải có otp
-    //- nếu xác nhận lại thì không cần otp
-
     jwt.verify(req.token, pass_sign_token + timeSign,
       (err, decoded) => {
         if (err) {
@@ -85,7 +82,6 @@ class TokenHandler {
 
   /**
    * Tạo mới 1 token
-   * Trả về cho client gồm req.next_status, req.token, req.username, req.captcha.data
    * @param {*} req 
    * @param {*} res 
    * @param {*} next 

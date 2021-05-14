@@ -6,7 +6,7 @@ const url = "mongodb://localhost:27017/";
 class UserHandler {
 
     /**
-     * Tạo username mới
+     * Tạo user mới
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
@@ -37,9 +37,7 @@ class UserHandler {
         // console.log(req.user);
         // console.log("json_data: ", req.json_data);
         if (req.user) {
-            if (req.user.email === req.json_data.email //user của token và post là giống nhau
-                // && req.json_data.password === req.password //password post trùng với password trong csdl
-            ) {
+            if (req.user.email === req.json_data.email) { //email của token và post là giống nhau
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ status: 'OK', message: 'Đăng nhập thành công!' }));
             } else {
@@ -53,7 +51,7 @@ class UserHandler {
     }
 
     /**
-     * Lấy bản ghi với username trả về cho client
+     * Trả về token
      * @param {*} req 
      * @param {*} res 
      * @param {*} next 
@@ -61,15 +59,7 @@ class UserHandler {
     getUserInfo(req, res, next) {
         if (req.user) {
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({
-                status: "OK",
-                token: req.token
-            }
-                , (key, value) => {
-                    if (value === null) { return undefined; }
-                    return value
-                }
-            ));
+            res.end(JSON.stringify({ status: "OK", token: req.token }));
         } else {
             res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: 'NOK', message: 'Lỗi xác thực', error: req.error }));
