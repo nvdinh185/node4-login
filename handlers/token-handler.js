@@ -74,9 +74,6 @@ class TokenHandler {
 
     req.token = token && token.startsWith('Bearer ') ? token.slice(7) : token;
 
-    let otp = req.json_data ? req.json_data.otp : undefined; //lay tu json_data post
-    // console.log("json_data...", req.json_data);
-    req.otp = otp;
     next();
   }
 
