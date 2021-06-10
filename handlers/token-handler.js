@@ -30,7 +30,7 @@ const sign = (req, expires) => {
 class TokenHandler {
 
   /**
-   * Xác thực lại otp và token có hợp lệ không?
+   * Xác thực lại token có hợp lệ không?
    * @param {*} req 
    * @param {*} res 
    * @param {*} next 
@@ -42,7 +42,7 @@ class TokenHandler {
     } catch (e) { }
     // console.log("userToken: ", userToken);
     let timeSign = userToken.time_sign;
-    //xác thực token và otp truyền lên:
+    //xác thực token truyền lên:
     jwt.verify(req.token, pass_sign_token + timeSign,
       (err, decoded) => {
         if (err) {
@@ -57,7 +57,7 @@ class TokenHandler {
   }
 
   /**
-   * Lấy token và otp truyền lên
+   * Lấy token truyền lên
    * @param {*} req 
    * @param {*} res 
    * @param {*} next 
