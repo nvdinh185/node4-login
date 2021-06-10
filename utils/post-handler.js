@@ -30,4 +30,4 @@ class PostHandlers {
     })
   }
 }
-module.exports = new PostHandlers()
+module.exports = new PostHandlers();

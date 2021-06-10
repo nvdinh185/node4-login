@@ -37,7 +37,7 @@ class UserHandler {
         // console.log(req.user);
         // console.log("json_data: ", req.json_data);
         if (req.user) {
-            if (req.user.email === req.json_data.email) { //email của token và post là giống nhau
+            if (req.user.email === req.json_data.email && req.user.password === req.json_data.password) { //email của token và post là giống nhau
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ status: 'OK', message: 'Đăng nhập thành công!' }));
             } else {
