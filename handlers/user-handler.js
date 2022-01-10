@@ -3,6 +3,8 @@
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
 
+const { v4: uuidv4 } = require('uuid');
+
 class UserHandler {
 
     /**
@@ -12,7 +14,7 @@ class UserHandler {
      * @param {*} next 
      */
     async createUser(req, res, next) {
-        let user = { id: new Date().getTime(), ...req.json_data };
+        let user = { id: uuidv4(), ...req.json_data };
         // console.log(user);
         MongoClient.connect(url, (err, db) => {
             if (err) throw err;
@@ -37,15 +39,16 @@ class UserHandler {
         // console.log(req.user);
         // console.log("json_data: ", req.json_data);
         if (req.user) {
-            if (req.user.email === req.json_data.email && req.user.password === req.json_data.password) { //email của token và post là giống nhau
+            if (req.user.email === req.json_data.email
+                && req.user.password === req.json_data.password) { //email và password của token và post là giống nhau
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ status: 'OK', message: 'Đăng nhập thành công!' }));
             } else {
-                res.writeHead(435, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ status: 'NOK', message: 'Đăng nhập thất bại!' }));
             }
         } else {
-            res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: 'NOK', message: 'Lỗi xác thực', error: req.error }));
         }
     }
@@ -61,7 +64,7 @@ class UserHandler {
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: "OK", token: req.token }));
         } else {
-            res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ status: 'NOK', message: 'Lỗi xác thực', error: req.error }));
         }
     }

@@ -30,11 +30,11 @@ export class SignupComponent implements OnInit {
   }
 
   async onSubmit() {
-    let urlServer = 'http://localhost:3000/auth/create-user';
-    let user = this.formSignUp.value;
-    let res = await this.authService.postDynamicJson(urlServer, user);
-    this.apiStorage.save("TOKEN", res.token);
-    console.log(res);
+    const urlServer = 'http://localhost:3000/auth/create-user';
+    const user = this.formSignUp.value;
+    const results = await this.authService.postDynamicJson(urlServer, user);
+    this.apiStorage.save("TOKEN", results.token);
+    console.log(results);
   }
 
 }

@@ -11,9 +11,9 @@ const pass_sign_token = 'nvdinh_13052021';
  */
 const sign = (req, expires) => {
 
-  let timeSign = Date.now();
+  const timeSign = Date.now();
 
-  let token = jwt.sign({
+  const token = jwt.sign({
     email: req.json_data.email,
     password: req.json_data.password,
     time_sign: timeSign
@@ -42,7 +42,7 @@ class TokenHandler {
       userToken = jwt.decode(req.token);
     } catch (e) { }
     // console.log("userToken: ", userToken);
-    let timeSign = userToken.time_sign;
+    const timeSign = userToken.time_sign;
     //xác thực token truyền lên:
     jwt.verify(req.token, pass_sign_token + timeSign,
       (err, decoded) => {

@@ -23,11 +23,11 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    let user = this.formSignIn.value;
-    let urlServer = 'http://localhost:3000/auth/login-user';
+    const user = this.formSignIn.value;
+    const urlServer = 'http://localhost:3000/auth/login-user';
     try {
-      let res = await this.authService.postDynamicJson(urlServer, user, true);
-      console.log(res);
+      const results = await this.authService.postDynamicJson(urlServer, user, true);
+      console.log(results);
     } catch (error) {
       console.log(error);
     }
